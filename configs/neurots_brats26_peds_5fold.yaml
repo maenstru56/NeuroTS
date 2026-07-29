@@ -1,0 +1,182 @@
+data:
+  train_roots:
+    - data/BraTS26_PED_training
+    - data/BraTS26_PED_training_Batch2_Release
+  validation_root: data/BraTS26_PED_validation
+  cache_dir: cache/brats26_peds_task2_native_margin32
+  split_mode: fold
+  folds_file: cache/brats26_peds_task2_native_margin32/folds_5.json
+  num_folds: 5
+  fold_index: 0
+  modalities: [t1n, t1c, t2w, t2f]
+  crop_margin: 32
+  patch_size: [128, 160, 112]
+  batch_size: 4
+  foreground_oversample: null
+  min_foreground_voxels: 16
+  label_mode: multiclass
+  patch_sampling_strategy: component_balanced
+  patch_sampling_probabilities:
+    random: 0.15
+    foreground: 0.20
+    et: 0.15
+    net: 0.10
+    cc: 0.20
+    ed: 0.12
+    hard_negative: 0.08
+  target_class_jitter_voxels: 24
+  targeted_patch_retries: 16
+  cache_memory_cases: 8
+  num_workers: 12
+  pin_memory: true
+  image_dtype: float32
+  overwrite_cache: false
+  intensity_clip_percentiles: [0.5, 99.5]
+
+model:
+  name: NeuroTS_Net_v1
+  in_channels: 4
+  num_classes: 5
+  base_channels: 32
+  model_id: M
+  kernel_size: 3
+  expansion_ratios: null
+  block_counts: null
+  normalization: group
+  dropout: 0.0
+  deep_supervision: true
+  residual_blocks: true
+  residual_resampling: true
+  checkpoint_style: outside_block
+  use_global_response_norm: true
+  use_selective_branches: true
+  branch_dropout_prob: 0.05
+  branch_selection_topk: 2
+  branch_temperature_start: 2.0
+  branch_temperature_end: 0.5
+  branch_residual_gain_init: 0.005
+  use_raw_detail_stream: true
+  raw_detail_channels: 8
+  raw_detail_injection_init: 0.001
+
+loss:
+  name: region_aware
+  include_background: false
+  batch_dice: false
+  dice_weight: 1.0
+  ce_weight: 1.0
+  label_smoothing: 0.0
+  main_ce_weight: 0.40
+  main_label_dice_weight: 0.40
+  main_region_weight: 0.10
+  absent_rare_fp_weight: 0.10
+  ce_class_weights: [0.05, 2.25, 1.00, 3.50, 2.00]
+  label_dice_class_weights: [1.40, 0.60, 2.20, 1.40]
+  region_loss_weights:
+    ED: 1.25
+    CC: 1.75
+    ET: 1.25
+    NET: 0.75
+    TC: 0.75
+    WT: 0.50
+  rare_tversky_alpha_fp: 0.50
+  rare_tversky_beta_fn: 0.50
+  et_tversky_alpha_fp: 0.45
+  et_tversky_beta_fn: 0.55
+  cc_tversky_alpha_fp: 0.50
+  cc_tversky_beta_fn: 0.50
+  ed_tversky_alpha_fp_main: 0.60
+  ed_tversky_beta_fn_main: 0.40
+  absent_rare_fp_classes: [1, 3, 4]
+  absent_rare_fp_power: 2.0
+  deep_supervision_full_rare_outputs: 1
+
+train:
+  epochs: 1000
+  iterations_per_epoch: 250
+  val_iterations_per_epoch: 25
+  optimizer: adamw
+  learning_rate: 0.0012
+  adam_eps: 0.000001
+  weight_decay: 0.00003
+  grad_clip_norm: 12.0
+  mixed_precision: true
+  amp_dtype: bfloat16
+  scheduler: cosine
+  cosine_eta_min: 0.000001
+  warmup_epochs: 10
+  early_stopping_patience: 1000
+  seed: 42
+  validation_interval: 1
+  compute_validation_detailed_metrics: true
+  validation_detailed_metrics_interval: 1
+  enable_rare_present_full_evaluation: true
+  rare_present_full_eval_interval: 50
+  rare_present_full_eval_start_epoch: 50
+  rare_present_full_eval_use_tta: false
+  rare_present_full_eval_save_csv: true
+  rare_present_full_eval_postprocess_et: true
+  disable_ed_for_safe_eval: false
+  branch_usage_regularization_weight: 0.0001
+  branch_usage_regularization_fraction: 0.3
+
+augmentation:
+  enabled: true
+  rotation_p: 0.2
+  rotation_degrees: 30.0
+  scaling_p: 0.2
+  scale_range: [0.8, 1.25]
+  elastic_enabled: false
+  gaussian_noise_p: 0.1
+  gaussian_noise_variance: [0.0, 0.1]
+  gaussian_blur_p: 0.15
+  gaussian_blur_sigma: [0.5, 1.0]
+  gaussian_blur_channel_p: 0.5
+  brightness_p: 0.15
+  brightness_multiplier: [0.75, 1.25]
+  contrast_p: 0.15
+  contrast_range: [0.75, 1.25]
+  lowres_p: 0.10
+  lowres_scale: [0.5, 1.0]
+  lowres_channel_p: 0.5
+  gamma_inverted_p: 0.1
+  gamma_normal_p: 0.3
+  gamma_range: [0.7, 1.5]
+  gamma_retain_stats: true
+  mirror_axes: [0, 1, 2]
+  mirror_axis_p: 0.5
+
+inference:
+  patch_size: [128, 160, 112]
+  sliding_window_overlap: 0.625
+  window_batch_size: 2
+  use_gaussian_weighting: true
+  gaussian_sigma_scale: 0.125
+  mixed_precision: true
+  amp_dtype: bfloat16
+  score_dtype: float32
+  tta_mirroring: true
+  tta_axes: [0, 1, 2]
+  save_fold_predictions: true
+  save_probabilities: false
+  lesion_dilation_iterations: 5
+  lesion_volume_threshold_mm3: 10.0
+  surface_tolerance_mm: 1.0
+  surface_distance_max_points: 20000
+  surface_distance_crop_margin: 2
+  use_probability_fusion: false
+  logit_biases: [0.0, 0.0, 0.0, 0.0, 0.0]
+  wt_gate_threshold: 0.25
+  wt_gate_dilation: 4
+  threshold_et: 0.45
+  threshold_cc: 0.20
+  threshold_ed: 0.15
+  min_component_voxels_et: 20
+  min_component_voxels_cc: 10
+  min_component_voxels_ed: 10
+
+output:
+  output_root: outputs
+  experiment_name: neurots_brats26_peds_5fold
+  save_plots: true
+  create_ensemble_dir: true

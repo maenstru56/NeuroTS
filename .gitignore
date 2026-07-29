@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Environments
+.venv/
+venv/
+env/
+.conda/
+
+# IDE and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Project-generated data
+data/
+cache/
+outputs/
+output/
+figures/*
+!figures/NeuroTS-Net.pdf
+!figures/NeuroTS-Net.png
+!figures/NeuroTS_Block.pdf
+!figures/NeuroTS_Block.png
+!figures/NeuroTS_Downsampling.pdf
+!figures/NeuroTS_Downsampling.png
+checkpoints/
+tmp/
+temp/
+*.log
+
+# Medical images, arrays, and model artifacts
+*.nii
+*.nii.gz
+*.npy
+*.npz
+*.pt
+*.pth
+*.ckpt
+
+# Archives and container artifacts
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.sif
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.local.yaml
+*.local.yml

@@ -1,0 +1,4 @@
+# Keep README translations and configuration guides classified as documentation
+# in GitHub Linguist so they do not affect the source-language statistics.
+README*.md linguist-documentation
+configs/*.md linguist-documentation

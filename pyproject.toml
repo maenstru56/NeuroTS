@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neurots-net"
+version = "0.1.0"
+description = "Training, evaluation, inference, and visualization tools for NeuroTS-Net"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "numpy>=1.26,<3.0",
+    "torch>=2.0",
+    "nibabel>=5.3",
+    "scipy>=1.12",
+    "PyYAML>=6.0.2",
+    "tqdm>=4.67",
+    "pandas>=2.2",
+    "matplotlib>=3.8",
+    "batchgenerators>=0.25",
+    "psutil>=5.9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
