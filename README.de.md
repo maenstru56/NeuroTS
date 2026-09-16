@@ -251,12 +251,23 @@ Bitte zitieren Sie unsere Veröffentlichung, wenn Sie dieses Repository verwende
 
 ### Klartext
 
-```
-
+```text
+Peteleaza, D., Dumitru, R.-G., Neamtu, B., Gellert, A., Sandu, M., & Matei, C. (2026).
+NeuroTS-Net: Multi-Class Semantic Segmentation of Pediatric Brain Tumors in Multi-Modal MRI.
+arXiv preprint arXiv:2609.16873. https://doi.org/10.48550/arXiv.2609.16873
 ```
 
 ### BibTeX
 
-```
-
+```bibtex
+@misc{peteleaza2026neurotsnet,
+  title         = {{NeuroTS-Net}: Multi-Class Semantic Segmentation of Pediatric Brain Tumors in Multi-Modal {MRI}},
+  author        = {Peteleaza, Darius and Dumitru, Razvan-Gabriel and Neamtu, Bogdan and Gellert, Arpad and Sandu, Mariana and Matei, Claudiu},
+  year          = {2026},
+  eprint        = {2609.16873},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  doi           = {10.48550/arXiv.2609.16873},
+  url           = {https://arxiv.org/abs/2609.16873}
+}
 ```
