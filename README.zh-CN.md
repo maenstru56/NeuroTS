@@ -19,10 +19,11 @@ NeuroTS-Net 架构由 Darius Peteleaza 开发。如对论文或代码有任何�
 
 本代码对应论文：**NeuroTS-Net: Multi-Class Semantic Segmentation of Pediatric Brain Tumors in Multi-Modal MRI**
 
-该论文目前正作为 [BraTS 挑战赛](https://challenges.synapse.org/Challenges/DetailsPage/Overview?id=syn74274097)参赛工作在 MICCAI 2026 审稿中。
+本论文已被 [BraTS 2026 挑战赛：BraTS-PEDs（任务 2）](https://challenges.synapse.org/Challenges/DetailsPage/Overview?id=syn74274097) - MICCAI 2026 接收。
 
-- MICCAI/BraTS 论文链接：待添加。
-- arXiv 预印本链接：待添加。
+- **Springer Nature 会议论文集：** 已接收；链接将在发布后添加。
+- **arXiv 预印本：** [https://arxiv.org/abs/2609.16873](https://arxiv.org/abs/2609.16873)
+- **MICCAI 2026 - BraTS-PEDs 海报：** [查看海报](figures/MICCAI-2026_BraTS-PEDs_Poster.png)
 
 > [**引用。**](#how-to-cite) 如果您使用 NeuroTS-Net 代码、架构或配套论文中的材料，请引用我们的论文。本仓库采用 [知识共享署名 4.0 国际许可协议](LICENSE)。
 
